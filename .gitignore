@@ -1,0 +1,40 @@
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+pipeline.log
+.pytest_cache/
+.claude/
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+
+# Datos crudos descargados (se regeneran con build_dataset.py)
+data/raw/
+
+# Resultados y figuras generadas (se regeneran con main.py)
+figures/*.png
+results/*.csv
+results/*.json
+
+# Datos procesados (se regeneran)
+data/processed/
+
+# Entorno virtual
+venv/
+.env
+
+# PDFs académicos de referencia (no son artefactos del proyecto)
+referencias/

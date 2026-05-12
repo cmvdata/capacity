@@ -1,0 +1,550 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,spanish]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{authblk}
+\usepackage{siunitx}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!50!black,
+  citecolor=blue!50!black,
+  urlcolor=blue!50!black,
+}
+
+\title{\textbf{Capacity Market Design and Renewable Investment in Spain:}\\
+       \large An Empirical Assessment of ELCC with Hourly Generation Data (2019--2024)}
+\author{Carlo Vilches}
+\affil{Universitat de Barcelona\\
+       \texttt{cvilchce15@alumnes.ub.edu}}
+\date{\today}
+
+\begin{document}
+\selectlanguage{spanish}
+\maketitle
+
+\begin{abstract}
+\noindent
+El Real Decreto 932/2024 obliga a calibrar derating factors para el mecanismo
+de capacidad (CM) español 2026. Las metodologías existentes en otros países
+europeos (UK, Irlanda, Polonia) se basan en perfiles de demanda invernales y
+asumen la hidráulica como un agregado homogéneo, supuestos cuestionables para
+España. Este trabajo cuantifica la \emph{Effective Load Carrying Capability}
+(ELCC) de seis tecnologías en el sistema peninsular usando datos horarios
+ENTSO-E (BZN\textbar ES, 2019--2024) y compara contra la versión diaria
+(REData) sobre el mismo periodo. Tres contribuciones: (i) la granularidad
+horaria revela que la hidráulica de embalse tiene ELCC=0.73 ---similar al
+nuclear (0.92)--- mientras la fluyente queda en 0.14, hallazgo robusto a un
+análisis de sensibilidad sobre cinco escenarios de reparto de capacidad
+hidráulica; (ii) la Excepción Ibérica (2022--2023) infló el ELCC del CCGT
+estricto en +0.072 (+19\% relativo), sesgo regulatorio que debe excluirse al
+calibrar el CM 2026; (iii) cruzando con el registro de horas de stress del
+MIBEL Congestion Monitor (1\,044 horas O/R, Jaccard $\leq$ 0.10 contra top
+demanda neta) se confirma que el stress de precios no equivale a insuficiencia
+física de adecuación. La especificidad climática del perfil bimodal español
+hace inapropiado importar derating factors del norte de Europa.
+\end{abstract}
+
+\textbf{Palabras clave:} Mecanismo de capacidad, ELCC, energías renovables,
+ENTSO-E, mercado eléctrico español, MIBEL, derating factors.
+
+% ============================================================================
+\section{Introducción}
+% ============================================================================
+
+\subsection{Motivación: el CM 2026 español}
+
+El Real Decreto 932/2024 introduce un mecanismo de capacidad con subastas
+desacopladas del energía-only spot, en línea con la propuesta europea de
+Reformas del Diseño de Mercado (EMR). La calibración de los derating factors
+---es decir, la fracción de capacidad nominal que cada tecnología puede
+acreditar como firme--- es un parámetro normativo crítico: define cuántos
+megavatios efectivos aporta cada inversión a la subasta y, por tanto, su
+ingreso esperado.
+
+La regla heurística común en otros mercados (capacity factor anual) sobreestima
+sistemáticamente el valor de adecuación de las tecnologías intermitentes en
+los regímenes con alta penetración renovable. La métrica preferida desde
+\citet{garver1966} es el ELCC: el factor de capacidad medido durante las
+horas de mayor stress del sistema (no el promedio anual).
+
+\subsection{Pregunta de investigación}
+
+¿Cuáles son los derating factors empíricamente justificados para las seis
+tecnologías relevantes (nuclear, eólica, solar, hidráulica de embalse,
+hidráulica fluyente, bombeo, CCGT) en el sistema peninsular español
+2019--2024? ¿En qué medida los hallazgos cualitativos son robustos a la
+granularidad temporal del dato y al reparto interno de la capacidad
+hidráulica?
+
+\subsection{Contribución}
+
+Este trabajo aporta tres elementos al debate:
+
+\begin{enumerate}
+\item \textbf{ELCC con datos horarios reales} (ENTSO-E 16.1.B\&C, BZN\textbar ES,
+      2019--2024) en lugar de la generación diaria sin token (REData). Para
+      tecnologías despachables con perfil temporal concentrado el factor de
+      planta horario en pico difiere materialmente del factor diario.
+\item \textbf{Desagregación de la hidráulica} en sus tres sub-tecnologías
+      (embalse, fluyente, bombeo). El agregado tradicional oculta una
+      heterogeneidad de adecuación de factor 5$\times$ entre embalse y
+      fluyente. El hallazgo se valida con un análisis de sensibilidad
+      sobre cinco escenarios alternativos de reparto de capacidad.
+\item \textbf{Cuantificación del sesgo regulatorio} introducido por la
+      Excepción Ibérica (2022--2023) en el ELCC del gas. La intervención
+      modificó el orden de mérito del CCGT estricto en +0.072 puntos de ELCC.
+\end{enumerate}
+
+% ============================================================================
+\section{Literatura}
+% ============================================================================
+
+\citet{garver1966} introdujo el ELCC como métrica de equivalencia entre
+adiciones de capacidad y reducciones de demanda: una unidad con ELCC=1.0
+equivale, desde la perspectiva de adecuación, a una reducción permanente de
+1\,MW de demanda en horas pico.
+
+\citet{millswiser2013} y \citet{madaeni2013} formalizan las distintas
+aproximaciones para calcular ELCC en presencia de penetración renovable
+creciente, identificando la ``saturación'' o efecto de dilución del
+ELCC marginal a medida que aumenta la capacidad instalada de tecnologías
+con perfiles correlacionados.
+
+El debate sobre la necesidad de mecanismos de capacidad propiamente dichos
+---frente a un diseño \emph{energy-only}--- está consolidado en
+\citet{joskow2008} y \citet{cramton2013}. \citet{batlleperezarriaga2008}
+discuten criterios específicos para el diseño en mercados liberalizados,
+prefigurando algunos elementos del RD 932/2024.
+
+Los benchmarks europeos publicados por \citet{nationalgrideso2024},
+\citet{eirgrid2023} y \citet{pse2023} sirven de referencia comparativa,
+pero su transferibilidad al caso español está limitada por la diferencia
+de perfiles climáticos y mix tecnológico.
+
+% ============================================================================
+\section{Datos}
+% ============================================================================
+
+\subsection{Generación: ENTSO-E BZN\textbar ES (horario, 2019--2024)}
+
+Se descargan los 72 archivos mensuales del dataset ``Actual Generation per
+Production Type'' (16.1.B\&C, código de zona 10YES-REE---0). La unidad
+oficial es MW promedio del intervalo \citep{entsoe2023}: para PT60M
+(2019-01 a 2022-05) y PT15M (desde 2022-06) la conversión a MWh por hora
+es directa (PT60M) o requiere promedio móvil (PT15M $\rightarrow$ PT60M con
+media). La cobertura es 99.94\% (faltan 5 horas el 2019-12-24 02--06h UTC,
+gap de la fuente).
+
+El dataset incluye 21 \emph{Production Types}; este trabajo usa siete:
+nuclear (B14), solar (B16), eólica onshore+offshore (B19+B18), hidráulica
+de embalse (B12), fluyente (B11), bombeo (B10) y \emph{Fossil Gas} (B04).
+
+\subsection{Capacidad instalada: REData (REE)}
+
+REData publica capacidad instalada mensual por tecnología (\texttt{api.ree.es},
+sin token). Se hace forward-fill a horario para alinear con la generación
+ENTSO-E. La capacidad agregada ``Hidráulica'' (\textasciitilde17 GW) no se
+desglosa entre embalse, fluyente y bombeo; se usa el reparto 35/45/20\%
+(\emph{Sección 6.4}), validado por sensibilidad.
+
+\subsection{Cobertura geográfica}
+
+ENTSO-E BZN\textbar ES corresponde al sistema peninsular más Baleares; excluye
+las islas Canarias. REData estructura-generación incluye Canarias. La
+diferencia anual en eólica es de aproximadamente $-3\%$ (consistente con
+\textasciitilde2 TWh/año de eólica canaria), absorbido como caveat documentado.
+
+\subsection{Stress sistémico: MIBEL Congestion Monitor}
+
+Para Block A se reutilizan las 52\,530 horas clasificadas por
+\citet{vilches2024mibel}, de las cuales 1\,044 son alertas Naranja o
+Roja (1.99\% del total).
+
+% ============================================================================
+\section{Metodología}
+% ============================================================================
+
+\subsection{ELCC \emph{naive}}
+
+\begin{equation}
+\text{ELCC}(\text{tech}, N) = \frac{\overline{\text{gen}}_{\text{tech}}(\mathcal{T}_N)}{\bar{C}_{\text{tech}}(\mathcal{T}_N)\cdot \Delta t}
+\label{eq:elcc}
+\end{equation}
+
+donde $\mathcal{T}_N$ son los $N$ records (días en \texttt{daily}; horas en
+\texttt{hourly}) con mayor demanda neta del periodo, $\bar{C}$ es la
+capacidad instalada media en esos records y $\Delta t$ es la duración del
+intervalo (24h o 1h). Demanda neta:
+$D^{net} = \sum_i \text{gen}_i - \text{gen}_{\text{wind}} - \text{gen}_{\text{solar}}$.
+
+Para \texttt{daily} se usa $N=100$ (top-100 días, equivalente a la convención
+de \citet{entsoe2023}); para \texttt{hourly}, $N=2\,400$ (top-2\,400 horas, el
+mismo volumen temporal).
+
+\subsection{ELCC marginal}
+
+Siguiendo \citet{millswiser2013} se aproxima por diferencia finita:
+\begin{equation}
+\text{marginal\_ELCC}(\text{tech}) = \frac{\text{ELCC}(C+\Delta C) - \text{ELCC}(C)}{\Delta C}
+\label{eq:marginal}
+\end{equation}
+
+con $\Delta C = 1$\,GW. La asunción operacional es que la generación en las
+horas pico no aumenta al añadir capacidad (saturación de despacho); esto
+proporciona una cota superior de la dilución por capacidad adicional. Por
+construcción, todos los marginales son negativos.
+
+\subsection{Regímenes de mercado}
+
+El periodo se segmenta en tres regímenes:
+\begin{itemize}
+\item \emph{Pre-crisis}: 2019-01-01 a 2021-12-31.
+\item \emph{Excepción Ibérica}: 2022-01-01 a 2023-12-31 (mecanismo de
+      ajuste del gas RDL 10/2022).
+\item \emph{Post-excepción}: 2024-01-01 en adelante (vuelta al régimen
+      ordinario con alta penetración renovable).
+\end{itemize}
+
+El \emph{sesgo regulatorio} de una tecnología se define como la diferencia
+entre su ELCC sobre el periodo completo y su ELCC excluyendo la Excepción
+Ibérica.
+
+% ============================================================================
+\section{Resultados}
+% ============================================================================
+
+\subsection{ELCC por tecnología: comparación \emph{daily} vs \emph{hourly}}
+
+La Tabla~\ref{tab:elcc-comparison} resume los ELCC obtenidos con ambas
+granularidades, restringidos al periodo sin Excepción Ibérica. Para
+nuclear, solar y eólica los valores convergen ($|\Delta| < 0.01$),
+confirmando robustez metodológica. Las diferencias significativas
+aparecen en hidráulica y gas.
+
+\begin{table}[ht]
+\centering
+\caption{ELCC por tecnología, \emph{daily} (REData) vs \emph{hourly} (ENTSO-E),
+         sin Excepción Ibérica, $N$ equivalente a 100 días.}
+\label{tab:elcc-comparison}
+\begin{tabular}{lccc}
+\toprule
+Tecnología & ELCC \emph{daily} & ELCC \emph{hourly} & $\Delta$ \\
+\midrule
+Nuclear                       & 0.927 & 0.919 & $-0.008$ \\
+Solar (PV+T)                  & 0.126 & 0.126 & $+0.000$ \\
+Eólica                        & 0.152 & 0.145 & $-0.007$ \\
+Hidráulica total              & 0.222 & 0.334 & $+0.112$ \\
+\quad Hidro Embalse           & ---   & 0.728 & nuevo    \\
+\quad Hidro Fluyente          & ---   & 0.139 & nuevo    \\
+\quad Hidro Bombeo            & ---   & 0.642 & nuevo    \\
+CCGT (\emph{daily}) / Fossil Gas (\emph{hourly}) & 0.372 & 0.457 & $+0.085$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Hallazgo: hidráulica desagregada}
+
+La Tabla~\ref{tab:elcc-comparison} contiene el hallazgo principal del trabajo.
+El agregado ``Hidráulica = 0.22'' del enfoque diario es una media oscura entre
+tres tecnologías muy distintas:
+
+\begin{itemize}
+\item \textbf{Embalse} (\textasciitilde 35\% capacidad): ELCC = 0.728. Casi
+      tan firme como nuclear.
+\item \textbf{Bombeo} (\textasciitilde 20\% capacidad): ELCC = 0.642.
+      Despachable optimizado para horas pico.
+\item \textbf{Fluyente} (\textasciitilde 45\% capacidad): ELCC = 0.139.
+      Bajo, esperado (no despachable).
+\end{itemize}
+
+Calibrar el derating factor del CM 2026 sobre la hidráulica \emph{agregada}
+infraestima sistemáticamente el valor de adecuación del embalse y bombeo
+en un factor cercano a 3. La Figura~\ref{fig:heatmap-hourly} muestra el
+ELCC por umbral $N$ para todas las tecnologías horarias.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\linewidth]{../figures/block_b_1_elcc_heatmap_hourly.png}
+\caption{ELCC \emph{hourly} por tecnología y umbral $N$. La columna ``Hidro
+         Embalse'' es prácticamente plana en torno a 0.5--0.75 a través de los
+         distintos $N$, indicando alta firmeza estructural.}
+\label{fig:heatmap-hourly}
+\end{figure}
+
+\subsection{Sesgo regulatorio: Excepción Ibérica}
+
+La Tabla~\ref{tab:excepcion} compara ELCC con y sin Excepción Ibérica. Para
+el CCGT estricto (\emph{daily}, REData) el sesgo es $+0.072$ (+19\% relativo
+sobre 0.372). Para Fossil Gas total (\emph{hourly}, ENTSO-E, incluye cogen-gas)
+el sesgo es menor, $+0.041$, porque la intervención afectó principalmente
+al CCGT del merit order y no a la cogeneración industrial no intervenida.
+
+\begin{table}[ht]
+\centering
+\caption{Sesgo regulatorio por tecnología (sesgo $=$ ELCC$_{\text{2019-24}} -$
+         ELCC$_{\text{sin Exc. Ibérica}}$).}
+\label{tab:excepcion}
+\begin{tabular}{lcc}
+\toprule
+Tecnología & Sesgo \emph{daily} (REData) & Sesgo \emph{hourly} (ENTSO-E) \\
+\midrule
+Nuclear            & $+0.003$ & $+0.011$ \\
+Eólica             & $-0.024$ & $-0.009$ \\
+Solar              & $+0.014$ & $-0.034$ \\
+Hidráulica total   & $-0.025$ & $-0.005$ \\
+\quad Embalse      & ---      & $-0.024$ \\
+\quad Fluyente     & ---      & $-0.010$ \\
+\quad Bombeo       & ---      & $+0.027$ \\
+CCGT / Fossil Gas  & $\mathbf{+0.072}$ & $\mathbf{+0.041}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{ELCC marginal}
+
+La Tabla~\ref{tab:marginal} reporta los marginales para $\Delta C = 1$\,GW
+en \emph{hourly}. Todos son negativos (saturación). Los más pronunciados
+corresponden a tecnologías con menor capacidad instalada de base
+(bombeo \textasciitilde 3.4\,GW, embalse \textasciitilde 6\,GW, nuclear
+\textasciitilde 7\,GW), donde un GW adicional representa una expansión
+proporcionalmente grande.
+
+\begin{table}[ht]
+\centering
+\caption{ELCC marginal, $\Delta C = 1$\,GW, \emph{hourly}, sin Excepción
+         Ibérica.}
+\label{tab:marginal}
+\begin{tabular}{lcccc}
+\toprule
+Tecnología & ELCC base & ELCC $+1$\,GW & Marginal & Cap. base (GW) \\
+\midrule
+Eólica            & 0.145 & 0.140 & $-0.0053$ & 28.3 \\
+Solar             & 0.126 & 0.118 & $-0.0082$ & 18.4 \\
+Fluyente          & 0.139 & 0.123 & $-0.0160$ & 7.7 \\
+Bombeo            & 0.642 & 0.497 & $\mathbf{-0.1453}$ & 3.4 \\
+Embalse           & 0.728 & 0.624 & $\mathbf{-0.1042}$ & 6.0 \\
+Nuclear           & 0.919 & 0.806 & $-0.1132$ & 7.1 \\
+Fossil Gas        & 0.457 & 0.441 & $-0.0161$ & 27.4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sensibilidad a HYDRO\_CAP\_RATIOS}
+
+La capacidad agregada hidráulica de REData (\textasciitilde17\,GW) se
+reparte en tres sub-tecnologías con ratios aproximados (35/45/20\%) basados
+en estadísticas REE públicas. La Tabla~\ref{tab:sensitivity} muestra el
+ELCC bajo cinco escenarios alternativos con la capacidad agregada fija.
+
+\begin{table}[ht]
+\centering
+\caption{Sensibilidad de ELCC sub-hidráulico a HYDRO\_CAP\_RATIOS
+         (top-2\,400 horas, sin Excepción Ibérica).}
+\label{tab:sensitivity}
+\begin{tabular}{lcccc}
+\toprule
+Escenario & Embalse / RoR / Bombeo & Embalse & RoR & Bombeo \\
+\midrule
+Base                  & 35 / 45 / 20 & \textbf{0.728} & \textbf{0.139} & \textbf{0.642} \\
+Conservador-embalse   & 30 / 50 / 20 & 0.849 & 0.125 & 0.642 \\
+Generoso-embalse      & 40 / 40 / 20 & 0.637 & 0.156 & 0.642 \\
+Conservador-bombeo    & 35 / 50 / 15 & 0.728 & 0.125 & 0.856 \\
+Generoso-bombeo       & 35 / 40 / 25 & 0.728 & 0.156 & 0.514 \\
+\midrule
+\multicolumn{2}{l}{\textbf{Rango observado}} & \textbf{[0.64, 0.85]} & \textbf{[0.13, 0.16]} & \textbf{[0.51, 0.86]} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Robustez del hallazgo}: en el escenario más adverso para el
+embalse (\emph{Generoso-embalse}, 40\% cap), el ELCC sigue siendo 0.637
+$> 0.60$. En el peor caso para el bombeo (\emph{Generoso-bombeo}, 25\% cap),
+el ELCC cae a 0.514, todavía claramente firme. La conclusión cualitativa
+``embalse y bombeo son tecnologías firmes'' se mantiene en los cinco
+escenarios.
+
+\subsection{Comparación con benchmarks europeos}
+
+La Tabla~\ref{tab:benchmarks} compara España con UK, Irlanda y Polonia.
+El ELCC solar peninsular ($\sim$0.13 \emph{hourly}) supera 4--13$\times$
+los valores de UK e Irlanda. La razón es el perfil bimodal de demanda
+española: las horas críticas no son sólo invernales nocturnas, sino
+también estivales diurnas (refrigeración con alta radiación). La
+Figura~\ref{fig:hourly-profile} cuantifica esta bimodalidad.
+
+\begin{table}[ht]
+\centering
+\caption{ELCC España (\emph{hourly}, sin Excepción Ibérica) vs benchmarks
+         europeos publicados.}
+\label{tab:benchmarks}
+\begin{tabular}{lcccc}
+\toprule
+País / Sistema & Eólica & Solar & Nuclear & Hidráulica \\
+\midrule
+\textbf{España (este trabajo)} & \textbf{0.15} & \textbf{0.13} & \textbf{0.92} & \textbf{0.33}$^\dagger$ \\
+UK \citep{nationalgrideso2024} & 0.08 & 0.03 & 0.92 & 0.15 \\
+Irlanda \citep{eirgrid2023}    & 0.10 & 0.01 & ---   & 0.20 \\
+Polonia \citep{pse2023}        & 0.08 & 0.02 & ---   & 0.10 \\
+\bottomrule
+\multicolumn{5}{l}{\small$^\dagger$ Hidráulica total (Embalse 0.73, Fluyente 0.14, Bombeo 0.64).}
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\linewidth]{../figures/block_b_6_hourly_profile_top100.png}
+\caption{Perfil horario y mensual de las top-100 horas de mayor demanda
+         (España 2023). Doble pico: invernal (18--20h, ene/dic) y estival
+         (12--17h, jul/ago). \textasciitilde 50\% de las horas críticas
+         tienen sol disponible.}
+\label{fig:hourly-profile}
+\end{figure}
+
+\subsection{Stress sistémico vs adecuación: cruce con MIBEL}
+
+Las 1\,044 horas O/R clasificadas por el MIBEL Congestion Monitor
+\citep{vilches2024mibel} se solapan con las top-$N$ horas de mayor demanda
+neta sólo marginalmente: índice de Jaccard entre 0.05 (top-50) y 0.10
+(top-1\,000). Esto confirma que el stress detectado por el MIBEL ---tensión
+estructural en la interconexión ES-FR y precios extremos--- es de naturaleza
+económica, no de adecuación física. La Figura~\ref{fig:overlap}
+visualiza este desacoplamiento.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\linewidth]{../figures/block_a_2_overlap_table.png}
+\caption{Solapamiento entre alertas MIBEL O/R y top-$N$ horas de mayor
+         demanda neta. Jaccard $\leq$ 0.10 en todos los umbrales: el
+         stress económico no es proxy de la insuficiencia física.}
+\label{fig:overlap}
+\end{figure}
+
+% ============================================================================
+\section{Implicaciones de política}
+% ============================================================================
+
+\subsection{Calibración del CM 2026}
+
+\begin{enumerate}
+\item \textbf{Excluir 2022--2023 al calcular derating factors del gas}.
+      Usar el periodo completo 2019--2024 sobreestima el ELCC del CCGT en
+      0.072 (+19\% relativo). Como referencia, ENTSO-E recomienda
+      excluir periodos de intervención regulatoria \citep{entsoe2023}.
+\item \textbf{Desagregar la hidráulica}. Tratar embalse, fluyente y bombeo
+      como tecnologías diferenciadas en la subasta. Calibrar derating
+      factors de $\sim$0.73 para embalse, $\sim$0.64 para bombeo, $\sim$0.14
+      para fluyente.
+\item \textbf{No importar benchmarks del norte de Europa para solar}. El
+      ELCC solar peninsular es de 0.13, no de 0.01--0.03. Adoptar los
+      derating factors de UK/IE sobrepenalizaría la solar en \textasciitilde 80\%.
+\item \textbf{Incorporar el ELCC marginal}. Las subastas deben penalizar
+      adiciones marginales en tecnologías ya saturadas (Tabla~\ref{tab:marginal}).
+\end{enumerate}
+
+\subsection{Mecanismo vs precios spot}
+
+El bajo Jaccard MIBEL-adecuación indica que un mecanismo basado puramente
+en señales de precio \emph{day-ahead} no garantizaría la seguridad de
+suministro. Un CM bien diseñado debería identificar las horas de stress
+físico (no las de precio extremo) y remunerarlas. Esto refuerza el diseño
+del RD 932/2024 como complemento ---no sustituto--- del mercado spot.
+
+% ============================================================================
+\section{Limitaciones}
+% ============================================================================
+
+\subsection{Cobertura geográfica}
+
+ENTSO-E BZN\textbar ES excluye Canarias. Los \textasciitilde 2 TWh/año de
+eólica canaria no se reflejan, lo que produce un sesgo a la baja de \textasciitilde 3\%
+en el ELCC eólico. Como las Canarias son un sistema aislado con
+mecanismo de despacho propio, esta exclusión es defendible para el CM
+peninsular.
+
+\subsection{Definición de Fossil Gas}
+
+ENTSO-E ``Fossil Gas'' incluye cogeneración alimentada por gas natural,
+no sólo CCGT. Esto es funcionalmente correcto para medir gas firme total
+del sistema, pero no es 1:1 con la categoría ``Ciclo Combinado'' que el
+CM trata como subasta separada.
+
+\subsection{Reparto interno de hidráulica}
+
+REData publica capacidad instalada hidráulica agregada (\textasciitilde 17 GW)
+sin desglosar embalse, fluyente y bombeo. Se asume el reparto 35/45/20\%
+basado en estadísticas REE públicas. La sensibilidad
+(Sección~\ref{sec:results}, Tabla~\ref{tab:sensitivity}) confirma que
+el hallazgo cualitativo es robusto, pero la calibración numérica precisa
+requeriría acceso a ENTSO-E 14.1.A (Installed Capacity per Production Type),
+pendiente.
+
+\subsection{Granularidad por planta}
+
+ESIOS (api.esios.ree.es) publicaría generación horaria por unidad
+(no agregada), lo que permitiría análisis ELCC a nivel de central
+(útil para subastas de capacidad por planta). La solicitud de token
+está pendiente; el refinamiento es trabajo futuro.
+
+\subsection{Periodo post-excepción corto}
+
+Sólo 2024 está disponible como observación post-Excepción. Los hallazgos
+sobre el régimen post-excepción (especialmente la solar y el bombeo
+expandidos) deben revisarse con datos 2025--2026.
+
+% ============================================================================
+\section{Conclusiones}
+% ============================================================================
+
+\begin{enumerate}
+\item Para nuclear, solar y eólica, la granularidad horaria no cambia
+      materialmente el ELCC respecto a la diaria ($|\Delta| < 0.01$). El
+      enfoque diario REData es metodológicamente válido para estas
+      tecnologías.
+\item Para tecnologías despachables con perfil temporal concentrado
+      (hidráulica de embalse, bombeo, gas), la granularidad horaria es
+      necesaria. El agregado ``Hidráulica = 0.22'' \emph{daily} oculta
+      tres regímenes muy distintos: \textbf{embalse 0.73, fluyente 0.14,
+      bombeo 0.64}.
+\item El hallazgo es robusto a la incertidumbre sobre el reparto interno
+      de capacidad hidráulica (rango ELCC embalse [0.64, 0.85] en cinco
+      escenarios; rango ELCC bombeo [0.51, 0.86]).
+\item La Excepción Ibérica infló el ELCC del CCGT estricto en $+0.072$.
+      El CM 2026 debe excluir 2022--2023 de la calibración de derating
+      factors del gas.
+\item El ELCC solar peninsular (0.13) es 4--13$\times$ los benchmarks
+      del norte de Europa. La especificidad climática del perfil
+      bimodal español hace inapropiado importar derating factors
+      ajenos sin ajuste.
+\item El stress sistémico del MIBEL es de naturaleza económica
+      (Jaccard $\leq$ 0.10 con la adecuación física). Un CM basado
+      puramente en señales spot no garantizaría la seguridad de
+      suministro; el diseño del RD 932/2024 (CM separado) es
+      coherente con esta evidencia.
+\end{enumerate}
+
+\paragraph{Reproducibilidad}
+El código completo, datos y figuras están disponibles en
+\url{https://github.com/cmvdata/cm-spain-renewables}. Los resultados son
+reproducibles vía \texttt{python main.py --freq hourly}; los tests unitarios
+(\texttt{pytest tests/}, 27/27 \emph{passing}) cubren las decisiones
+metodológicas críticas.
+
+% ============================================================================
+\bibliographystyle{apalike}
+\bibliography{refs}
+
+\end{document}
