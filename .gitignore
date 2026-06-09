@@ -24,8 +24,9 @@ paper/*.synctex.gz
 # Datos crudos descargados (se regeneran con build_dataset.py)
 data/raw/
 
-# Resultados y figuras generadas (se regeneran con main.py)
-figures/*.png
+# Figuras: versionadas para que el paper recompile al clonar (también se
+# regeneran con main.py). Resultados (CSV/JSON) sí se ignoran: los números
+# del paper van hardcoded en las tablas LaTeX.
 results/*.csv
 results/*.json
 
