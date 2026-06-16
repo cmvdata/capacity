@@ -369,15 +369,18 @@ different technologies:
 \end{itemize}
 
 A note on reconciliation: the aggregate (0.33) is \emph{not} the capacity-weighted
-mean of the three components, which is $\approx$0.45. The gap ($\approx$0.11) is not an
-error but a definitional artefact that reinforces the point. The aggregate ``total
-hydro'' series is \emph{net} of pumped-storage consumption (the charging load), whereas
-the disaggregated pumped factor (0.64) reflects gross \emph{turbining}, which is the
-adequacy-relevant quantity ---a pumped plant can turbine at full power in a scarcity
-hour irrespective of when it charged. Netting the pumping load is exactly what makes an
-aggregate hydro coefficient understate storage's firm contribution; the disaggregation
-removes that netting. The economic interpretation of the dispersion ---adverse
-selection in the auction--- is developed in Axis~1 (Section~\ref{sec:eje1}).
+mean of the three components ($\approx$0.45), and we do not treat it as one. The two
+are computed on different bases: the aggregate uses the total-hydro generation and
+capacity series, whereas the components use the ENTSO-E per-production-type generation
+(B12/B11/B10) against an \emph{assumed} 35/45/20 capacity split, since REData publishes
+only aggregate hydro capacity. Because the generation series differ and the component
+capacities are a split rather than metered per-stream values, the component factors are
+not arithmetically forced to average to the aggregate. The finding rests on the
+component coefficients and their robustness to the split
+(Table~\ref{tab:sensitivity}), not on the aggregate being their mean; the aggregate
+serves only to show what a single ``total hydro'' number conceals. The economic
+interpretation of the dispersion ---adverse selection in the auction--- is developed in
+Axis~1 (Section~\ref{sec:eje1}).
 Figure~\ref{fig:heatmap-hourly} shows ELCC by threshold $N$ for all hourly
 technologies.
 
@@ -958,9 +961,14 @@ revisited with 2025--2026 data, ideally before the mechanism's first auction.
 
 \paragraph{Reproducibility}
 The full code, data and figures are available at
-\url{https://github.com/cmvdata/capacity}. Results are reproducible via
+\url{https://github.com/cmvdata/capacity}. The ELCC results are reproducible via
 \texttt{python main.py --freq hourly}; the unit tests (\texttt{pytest tests/},
-27/27 \emph{passing}) cover the critical methodological decisions.
+27/27 \emph{passing}) cover the critical methodological decisions. The gas
+availability-versus-production decoupling of \S\ref{sec:eje3} is produced by the
+separate script \texttt{scripts/gas\_decoupling\_esios477.py}, which fetches ESIOS
+indicator~477 (CCGT \emph{potencia disponible}; an ESIOS API token is required) and
+writes the regime table; the fetched series is included as
+\texttt{data/esios\_477\_ccgt\_disp.csv}.
 
 % ============================================================================
 \bibliographystyle{apalike}
