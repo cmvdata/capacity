@@ -45,7 +45,7 @@ A capacity auction is a \emph{screening} mechanism: the de-rating factor and the
 critical-hour window form a ``slot'' that makes each technology reveal ---and be paid
 for--- its firmness type. We audit the slot of Spain's 2026/2027 capacity mechanism
 (\EUR{9} billion over ten years, approved as State aid SA.112483
-\citep{ec2026sa112483}). The keystone of the audit is that Spain's national de-rating
+\citep{ec2026sa112483}). Crucially, Spain's national de-rating
 coefficient (PO Section~7.1) ---the average, over the 5--10\% lowest-coverage-margin
 hours, of firm power over installed capacity--- is methodologically the Effective Load
 Carrying Capability (ELCC) we estimate from hourly ENTSO-E data (BZN\textbar ES,
@@ -110,42 +110,34 @@ revenue. Mis-calibrating it is not an academic rounding error: it mis-allocates
 \EUR{900} million a year and emits a biased investment signal over a ten-year
 horizon.
 
-\subsection{A screening lens: the slot, the channel, the market}
+\subsection{A screening lens}
 
-HBO did not survey to find its premium subscriber; it designed a slot ---Saturday
-midnight--- so that the most captive, least price-sensitive segment self-selected and
-revealed its type. The mechanism did the segmentation. A capacity auction works the
-same way, and this is the lens we adopt: the \emph{derating factor} together with the
-\emph{critical-hour window} is the slot, fixing the implied price per firm MW and
-therefore which technologies find it profitable to self-select in. A well-chosen slot
-screens for true firmness; a badly designed one attracts the wrong type. We deploy the
-analogy once and keep the economics.
-
-The lens has three layers. \emph{Screening / adverse selection} is the master
-mechanism: each technology knows its own firmness and the auction must elicit it; if
-the calibration over-credits a low-firmness resource and under-credits a high-firmness
-one, the low type self-selects in and is over-paid while the high type is under-paid
-and crowded out. \emph{The Shannon layer}: the de-rating method is an information
-channel meant to extract each technology's firmness type from data ---the window, the
-production-versus-availability measure and the historical period are the channel's
-design; a wrong window or a contaminated input garbles the signal and the type is
-mis-revealed. \emph{The Becker layer}: the auction is a market, a mis-priced firm MW
-is a distorted relative price, and because contracts run up to fifteen years that
-distortion misallocates a decade-plus investment stream. The rest of the paper shows
-that Spain's national slot mis-screens firmness along four facets of this single
-failure (\S\ref{sec:eje1}--\S\ref{sec:eje4}), that the mis-pricing is locked in before
-the EU benchmark matures (\S\ref{sec:decalage}--\S\ref{sec:penetration}), and prices
-the distortion against the value of lost load. Operationally, a well-designed CM, in
-the Commission's words, must not (i) raise consumer prices, (ii) grant undue advantages
-to specific operators, nor (iii) hinder cross-border flows \citep{ec2026sa112483}; the
-screening failure we document is criterion~(ii) made concrete.
+A capacity auction is, in effect, a screening device. The \emph{derating factor} and
+the \emph{critical-hour window} together fix the implied price per firm MW, and hence
+which technologies find it worthwhile to participate. A calibration that over-credits a
+low-firmness resource and under-credits a high-firmness one therefore induces
+\emph{adverse selection}: the low type enters and is over-paid, the high type is
+under-paid and crowded out. Three implications follow. First, the de-rating method is
+the channel through which each technology's firmness is inferred from data, so the
+window, the production-versus-availability measure and the historical period are
+calibration choices that can mis-reveal a type. Second, because the auction sets a
+relative price across technologies, a mis-priced firm MW is a distorted signal; and
+because new-investment contracts run up to fifteen years, the distortion misallocates a
+decade-long investment stream. Third, the relevant standard is the Commission's own: a
+capacity mechanism must not (i) raise consumer prices, (ii) grant undue advantages to
+specific operators, nor (iii) hinder cross-border flows \citep{ec2026sa112483}. The
+remainder of the paper shows that Spain's national coefficient mis-screens firmness
+along four facets of a single adverse-selection problem
+(\S\ref{sec:eje1}--\S\ref{sec:eje4}), that the mis-pricing is locked in before the EU
+benchmark matures (\S\ref{sec:decalage}--\S\ref{sec:penetration}), and prices the
+distortion against the value of lost load.
 
 \subsection{Research question}
 
 What are the empirically justified \emph{derating factors} for the relevant
 technologies (nuclear, wind, solar, reservoir hydro, run-of-river, pumped storage,
 gas) in the peninsular system 2019--2024, and what auction distortions does the
-2026 CM generate if calibrated with the usual shortcuts (aggregated hydro, imported
+2026/2027 CM generate if calibrated with the usual shortcuts (aggregated hydro, imported
 benchmarks, uncleaned history, price-based activation)? To what extent are the
 findings robust to the temporal granularity of the data and to the internal split
 of hydro capacity?
@@ -168,7 +160,7 @@ of hydro capacity?
       availability--- the distortion is a table-versus-rule mis-specification, not a
       contamination of the availability series.
 \item \textbf{Translation into design risks}: we map each statistical finding onto
-      a named auction risk of the 2026 CM (adverse selection, \emph{missing
+      a named auction risk of the 2026/2027 CM (adverse selection, \emph{missing
       money}, regulatory artifact, price-based activation), with the corresponding
       calibration recommendation.
 \end{enumerate}
@@ -180,7 +172,7 @@ of hydro capacity?
 \citet{garver1966} introduced ELCC as a metric of equivalence between capacity
 additions and demand reductions: a unit with ELCC=1.0 is equivalent, from an
 adequacy standpoint, to a permanent 1\,MW reduction of peak demand. It is this
-equivalence that the 2026 CM monetises by paying ``per MW available in scarcity''
+equivalence that the 2026/2027 CM monetises by paying ``per MW available in scarcity''
 \citep{ec2026sa112483}.
 
 \citet{millswiser2013} and \citet{madaeni2013} formalise the various approaches to
@@ -266,8 +258,8 @@ For \texttt{daily} we use $N=100$ (top-100 days, matching the convention of
 \citet{entsoe2023}); for \texttt{hourly}, $N=2\,400$ (top-2\,400 hours, the same
 temporal volume).
 
-\subsection{The keystone: Eq.~\ref{eq:elcc} \emph{is} the national slot, and equals
-ERAA method 12(7)(c)}
+\subsection{The realised ELCC is the national coefficient, and equals ERAA method
+12(7)(c)}
 \label{sec:keystone}
 
 The audit only bites if Eq.~\ref{eq:elcc} is the object the regulator actually uses.
@@ -292,7 +284,7 @@ applies it consistently \citep{acer042026}:
 \begin{itemize}
 \item \textbf{(a)} marginal ELCC: $\mathrm{DF}=\Delta\mathrm{EENS}_i/\Delta\mathrm{EENS}_{\text{ref}}$ ---the forward, marginal benchmark, not computable from realised data;
 \item \textbf{(b)} thermal: $\mathrm{DF}=1-\mathrm{FOR}-\mathrm{EPM}$, where the forced-outage rate ``may reflect risks associated with fuel availability constraints'';
-\item \textbf{(c)} average output over scarcity and near-scarcity hours, $\mathrm{DF}=\tfrac{1}{N}\sum \text{Output}/\text{Cap}$ ---the keystone, $=$ PO~7.1 $=$ Eq.~\ref{eq:elcc};
+\item \textbf{(c)} average output over scarcity and near-scarcity hours, $\mathrm{DF}=\tfrac{1}{N}\sum \text{Output}/\text{Cap}$ ---the realised national coefficient, $=$ PO~7.1 $=$ Eq.~\ref{eq:elcc};
 \item \textbf{(d)} energy-constrained / demand response: $\mathrm{DF}=(1-\mathrm{FOR})\,\sum_e T_e C_{e,i}/\sum_e T_e$, with $C_{e,i}=\min(1,T_{\text{avail}}/T_e)$.
 \end{itemize}
 We therefore position our empirical ELCC as the \emph{ex-post realised} benchmark
@@ -325,7 +317,7 @@ The period is segmented into three regimes:
 
 The \emph{regulatory bias} of a technology is defined as the difference between its
 ELCC over the full period and its ELCC excluding the Iberian Exception.
-Operationally, it is the fictitious firmness premium the 2026 CM would ``buy'' if
+Operationally, it is the fictitious firmness premium the 2026/2027 CM would ``buy'' if
 calibrated on the raw history.
 
 % ============================================================================
@@ -338,7 +330,7 @@ Table~\ref{tab:elcc-comparison} summarises the ELCC obtained with both
 granularities, restricted to the period without the Iberian Exception. For nuclear,
 solar and wind the values converge ($|\Delta| < 0.01$), confirming methodological
 robustness. The significant differences appear in hydro and gas ---precisely the
-technologies on which the 2026 CM calibration risk falls.
+technologies on which the 2026/2027 CM calibration risk falls.
 
 \begin{table}[ht]
 \centering
@@ -376,8 +368,16 @@ different technologies:
       expected (non-dispatchable).
 \end{itemize}
 
-The economic interpretation of this dispersion ---adverse selection in the
-auction--- is developed in Axis~1 (Section~\ref{sec:eje1}).
+A note on reconciliation: the aggregate (0.33) is \emph{not} the capacity-weighted
+mean of the three components, which is $\approx$0.45. The gap ($\approx$0.11) is not an
+error but a definitional artefact that reinforces the point. The aggregate ``total
+hydro'' series is \emph{net} of pumped-storage consumption (the charging load), whereas
+the disaggregated pumped factor (0.64) reflects gross \emph{turbining}, which is the
+adequacy-relevant quantity ---a pumped plant can turbine at full power in a scarcity
+hour irrespective of when it charged. Netting the pumping load is exactly what makes an
+aggregate hydro coefficient understate storage's firm contribution; the disaggregation
+removes that netting. The economic interpretation of the dispersion ---adverse
+selection in the auction--- is developed in Axis~1 (Section~\ref{sec:eje1}).
 Figure~\ref{fig:heatmap-hourly} shows ELCC by threshold $N$ for all hourly
 technologies.
 
@@ -540,12 +540,12 @@ Figure~\ref{fig:overlap} visualises this decoupling, the core of Axis~4
 \end{figure}
 
 % ============================================================================
-\section{Design audit: four calibration risks of the 2026 CM}
+\section{Design audit: four calibration risks of the 2026/2027 CM}
 % ============================================================================
 
 This section translates the results of Section~5 into design risks for the
 mechanism approved in SA.112483. Each axis follows the same structure: the
-\emph{link} to the auction mechanics, the \emph{forensic argument} on the
+\emph{link} to the auction mechanics, the \emph{argument} on the
 distortion introduced by shortcut calibration, and the \emph{recommendation} for
 correct calibration.
 
@@ -556,7 +556,7 @@ of storage}
 \textbf{Link.} The auction awards a price per firm MW to each plant. The
 \emph{derating factor} sets how many firm MW each unit accredits per MW installed.
 
-\textbf{Forensic argument.} If the regulator indexes the \emph{derating factors} on
+\textbf{Argument.} If the regulator indexes the \emph{derating factors} on
 ``total hydro'' ($\text{ELCC}=0.22$), the mechanism is born economically broken. It
 would be \emph{under-remunerating} reservoir ($0.73$) and pumped storage ($0.64$)
 by a factor close to 3$\times$, and \emph{over-remunerating} run-of-river ($0.14$)
@@ -597,13 +597,13 @@ storage investment signal that CISAF itself prioritises.
 \textbf{Link.} The solar \emph{derating factor} determines what fraction of solar
 \emph{missing money} the plant recovers via capacity revenue.
 
-\textbf{Forensic argument.} The CM design in northern Europe (UK, Poland, Ireland)
+\textbf{Argument.} The CM design in northern Europe (UK, Poland, Ireland)
 assumes a virtually nil solar adequacy value (1--3\%) because there critical hours
 occur strictly on winter nights. But the Spanish profile is \emph{bimodal}
 (Figure~\ref{fig:hourly-profile}): the top of critical hours includes a massive
 summer peak (July/August, 12--17h) driven by cooling. With
 $\text{ELCC}_{\text{solar}}=0.13$, peninsular PV physically coincides with
-\textasciitilde50\% of the system's critical adequacy hours. If the 2026 CM blindly
+\textasciitilde50\% of the system's critical adequacy hours. If the 2026/2027 CM blindly
 imports the National Grid or PSE parameters, it would penalise solar \emph{missing
 money} by \textasciitilde80\% (from $0.13$ to $\sim$0.03), a de facto
 discrimination that the non-discrimination criterion of SA.112483
@@ -627,13 +627,13 @@ difference.
 bimodal profile ($\sim$0.13), not on imported benchmarks, and make the critical-hour
 window explicit and forward-consistent rather than a silent historical artefact.
 
-\subsection{Axis 3 --- Gas: the table-versus-rule dilemma and fuel-blindness}
+\subsection{Axis 3 --- Gas: a deliberate availability choice and its fuel-blind residual}
 \label{sec:eje3}
 
 \textbf{Link.} Combined-cycle plants (CCGT) will be a key back-up resource in the
 first auctions; their \emph{derating factor} sets the firm MW they accredit.
 
-\textbf{Forensic argument.} Section~7.1 of the PO fixes a classification rule:
+\textbf{Argument.} Section~7.1 of the PO fixes a classification rule:
 measure firm power by \emph{potencia disponible} (declared technical availability)
 \emph{unless} a technology's contribution is conditioned by the availability of a
 primary energy resource, in which case measure it by \emph{producci\'on media
@@ -642,16 +642,22 @@ coal to \emph{potencia disponible} ---net capacity minus communicated unavailabi
 under PO~3.6, so that an idle but non-faulted plant still counts as available--- over a
 one-year window. Yet a CCGT's contribution \emph{is} conditioned by a primary energy
 resource: natural gas. By the PO's own rule the gas factor should then be measured by
-production. The table is internally consistent only under an unstated assumption that
-fossil-fuel supply is always available and non-binding ---a \emph{fuel-blindness} that
-the 2022 European gas crisis falsified.
+production. We read the table's choice not as a regulatory error but as a deliberate
+and, for the most part, sound one: measuring thermal by availability is precisely what
+\emph{insulates} the coefficient from the production-side distortions of subsidy
+episodes ---as the decoupling we measure below confirms, the Iberian Exception moved
+gas dispatch, not declared availability. The choice is consistent, however, only under
+an unstated assumption that fossil-fuel supply is always available and non-binding ---a
+\emph{fuel-blindness} that the 2022 European gas crisis falsified, and which is the one
+residual the availability route leaves.
 
-The mis-specification is therefore a dilemma in which both horns mis-measure gas.
-\emph{(i) Honour the table} (availability): the coefficient is blind to fuel-supply
-risk; it credits the plant's technical ability to start and ignores that gas delivers
-only if fuel is physically there. \emph{(ii) Honour the rule} (production, since fuel
-is a primary resource): the coefficient is contaminated by the Iberian Exception, whose
-gas subsidy inflated CCGT dispatch ---the $+0.072$ ($+19\%$) we measure on production
+Put plainly, the rule and its table point in different directions for gas, and each
+route leaves a distinct gap. \emph{(i) The table} (availability): the coefficient is
+blind to fuel-supply risk; it credits the plant's technical ability to start and
+ignores that gas delivers only if fuel is physically there. \emph{(ii) The rule}
+(production, since fuel is a primary resource): the coefficient is contaminated by the
+Iberian Exception, whose gas subsidy inflated CCGT dispatch ---the $+0.072$ ($+19\%$) we
+measure on production
 (Table~\ref{tab:excepcion}). The PO cannot satisfy both readings simultaneously; the
 gas coefficient is mis-specified under either.
 
@@ -714,7 +720,7 @@ acts on.
 stress ---and trigger its non-delivery penalties--- from the \emph{spot} price or
 from physical variables.
 
-\textbf{Forensic argument.} The cross-check with the MIBEL Congestion Monitor is
+\textbf{Argument.} The cross-check with the MIBEL Congestion Monitor is
 conclusive: a Jaccard index $\leq 0.10$ between economic-stress alerts and the top
 of net demand (Figure~\ref{fig:overlap}) shows that price stress ---typically
 caused by congestion rents on the interconnector with France or gas price spikes---
@@ -887,10 +893,12 @@ access to ENTSO-E 14.1.A (Installed Capacity per Production Type), pending.
 
 \subsection{Plant-level granularity}
 
-ESIOS (api.esios.ree.es) would publish hourly generation per unit (not aggregated),
-enabling plant-level ELCC analysis ---exactly the granularity that Axis~1
-recommends for the hydro \emph{derating factors}. The token request is pending; the
-refinement is future work.
+We use ESIOS for the CCGT declared-availability series of \S\ref{sec:eje3} (indicator
+477). What remains out of reach is generation \emph{per unit} (rather than per
+production type), which would enable plant-level ELCC and the per-plant hydro
+\emph{derating factors} Axis~1 recommends; that refinement is future work. The gas
+result of \S\ref{sec:eje3} is therefore complete at the technology level (the
+availability-versus-production decoupling is measured) but not yet at the unit level.
 
 \subsection{Short post-exception period}
 
@@ -919,8 +927,11 @@ revisited with 2025--2026 data, ideally before the mechanism's first auction.
       it carries the Iberian Exception's $+0.072$ dispatch inflation. The durable fix
       is to condition gas firmness on fuel risk, as ERAA Art.~12(7)(b) permits, not to
       trust \emph{potencia disponible}. The $+0.072$ is a production-channel result and
-      bites directly on the production-measured technologies (hydro, solar, wind); the
-      gas critique itself is structural, pending ESIOS availability data.
+      bites directly on the production-measured technologies (hydro, solar, wind); for
+      gas, the availability-versus-production decoupling is measured (ESIOS 477:
+      available power flat across regimes while dispatch spikes in the Exception),
+      confirming both that the contamination does not reach the availability coefficient
+      and that the coefficient over-credits delivery.
 \item \textbf{Axis 4.} MIBEL stress is economic (Jaccard $\leq 0.10$ with physical
       adequacy). The CM should index penalties on physical stress, not on the
       \emph{spot} price; the mechanism's separate design is consistent with this
